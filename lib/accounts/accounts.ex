@@ -7,7 +7,7 @@ defmodule VoxPublica.Accounts do
   alias Pointers.Changesets
   alias VoxPublica.Accounts.{
     Emails,
-    ChangeEmailForm,
+    ChangePasswordForm,
     ConfirmEmailForm,
     LoginForm,
     ResetPasswordForm,
@@ -22,7 +22,7 @@ defmodule VoxPublica.Accounts do
 
   @spec changeset(changeset_name, attrs :: map) :: Changeset.t
   def changeset(:change_password, attrs) when not is_struct(attrs),
-    do: ChangePassowrdForm.changeset(attrs)
+    do: ChangePasswordForm.changeset(attrs)
 
   def changeset(:confirm_email, attrs) when not is_struct(attrs),
     do: ConfirmEmailForm.changeset(attrs)
