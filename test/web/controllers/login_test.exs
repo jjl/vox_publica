@@ -13,6 +13,13 @@ defmodule VoxPublica.Web.LoginController.Test do
     assert [_] = Floki.find(form, "button[type='submit']")
   end
 
+  test "must be a guest" do
+    alice = fake_account!()
+    conn = conn(account: alice)
+    conn = get(conn, "/login")
+    assert redirected_to(conn) == "/_"
+  end
+
   describe "required fields" do
 
     test "missing both" do
@@ -94,7 +101,7 @@ defmodule VoxPublica.Web.LoginController.Test do
                 %{"email" => account.email.email,
                   "password" => account.login_credential.password}}
     conn = post(conn, "/login", params)
-    assert redirected_to(conn) == "/home"
+    assert redirected_to(conn) == "/_"
   end
 
 end
