@@ -6,6 +6,10 @@ defmodule VoxPublica.Web.ConfirmEmailController.Test do
   describe "request" do
 
     test "must be a guest" do
+      alice = fake_account!()
+      conn = conn(account: alice)
+      conn = get(conn, "/confirm-email")
+      assert redirected_to(conn) == "/_"
     end
 
     test "form renders" do
@@ -78,6 +82,10 @@ defmodule VoxPublica.Web.ConfirmEmailController.Test do
   describe "confirmation" do
 
     test "must be a guest" do
+      alice = fake_account!()
+      conn = conn(account: alice)
+      conn = get(conn, "/confirm-email/#{alice.email.confirm_token}")
+      assert redirected_to(conn) == "/_"
     end
 
     test "not found" do
@@ -95,14 +103,14 @@ defmodule VoxPublica.Web.ConfirmEmailController.Test do
       conn = conn()
       account = fake_account!()
       conn = get(conn, "/confirm-email/#{account.email.confirm_token}")
-      assert redirected_to(conn) == "/home"
+      assert redirected_to(conn) == "/_"
     end
 
     test "twice confirm" do
       conn = conn()
       account = fake_account!()
       conn = get(conn, "/confirm-email/#{account.email.confirm_token}")
-      assert redirected_to(conn) == "/home"
+      assert redirected_to(conn) == "/_"
       conn = get(build_conn(), "/confirm-email/#{account.email.confirm_token}")
       doc = floki_response(conn)
       assert [form] = Floki.find(doc, "#confirm-email-form")
