@@ -40,7 +40,10 @@
       </details>
     </div>
     <% end %>
-    <%= if @current_user == nil do %>
+    <%= if !@current_user && @current_account do %>
+      <p color="white">You're incredibly new here, huh?</p>
+    <% end %>
+    <%= if !@current_account == nil do %>
         <div class="panel__item">
           <%= live_redirect to: "/login", class: "button" do %>
             <i class="feather-log-in"></i> Log in
@@ -53,5 +56,5 @@
         </div>
       <% end %>
     </div>
-    </nav>
-  </header>
+  </nav>
+</header>
