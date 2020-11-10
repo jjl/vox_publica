@@ -66,6 +66,7 @@ alias CommonsPub.{
   Follows.Follow,
   Likes.Like,
   LocalAuth.LoginCredential,
+  Peers.Peered,
   Profiles.Profile,
   Threads.Thread,
   Users.User,
@@ -81,10 +82,12 @@ config :cpub_accounts, Accounted,
   belongs_to: [user: {User, foreign_key: :id, define_field: false}]
 
 config :cpub_characters, Character,
-  belongs_to: [user: {User, foreign_key: :id, define_field: false}]
+  belongs_to: [user: {User, foreign_key: :id, define_field: false}],
+  username: [format: nil]
 
 config :cpub_emails, Email,
-  belongs_to: [account: {Account, foreign_key: :id, define_field: false}]
+  belongs_to: [account: {Account, foreign_key: :id, define_field: false}],
+  email: [format: nil]
 
 config :cpub_local_auth, LoginCredential,
   belongs_to: [account: {Account, foreign_key: :id, define_field: false}],
@@ -99,9 +102,11 @@ config :cpub_actors, Actor,
 
 config :cpub_users, User,
   has_one: [accounted: {Accounted, foreign_key: :id}],
+  has_one: [actor:     {Actor,     foreign_key: :id}],
   has_one: [character: {Character, foreign_key: :id}],
-  has_one: [profile:   {Profile,   foreign_key: :id}],
-  has_one: [actor:     {Actor,     foreign_key: :id}]
+  has_one: [peered:    {Peered,    foreign_key: :id}],
+  has_one: [profile:   {Profile,   foreign_key: :id}]
+
 
 #### Forms configuration
 

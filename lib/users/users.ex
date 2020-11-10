@@ -47,7 +47,7 @@ defmodule VoxPublica.Users do
       join: a in assoc(u, :accounted),
       join: c in assoc(u, :character),
       where: a.account_id == ^account_id,
-      preload: [accounted: a, character: c]
+      preload: [character: c]
   end
 
   def by_username(username), do: Repo.single(by_username_query(username))
@@ -80,6 +80,19 @@ defmodule VoxPublica.Users do
       where: c.username == ^username,
       preload: [character: c, accounted: a],
       order_by: [asc: u.id]
+  end
+
+  def get_for_session(username, account_id),
+    do: Repo.single(get_for_session_query(username, account_id))
+
+  defp get_for_session_query(username, account_id) do
+    from u in User,
+      join: c in assoc(u, :character),
+      join: ac in assoc(u, :accounted),
+      join: a in assoc(ac, :account),
+      where: a.id == ^account_id,
+      where: c.username == ^username,
+      preload: [character: c, accounted: {ac, account: a}]
   end
 
 end

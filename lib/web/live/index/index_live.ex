@@ -1,19 +1,25 @@
 defmodule VoxPublica.Web.IndexLive do
   use VoxPublica.Web, :live_view
-  import VoxPublica.Web.CommonHelper
 
+  alias VoxPublica.Web.LivePlugs
 
   def mount(params, session, socket) do
-    socket = init_assigns(params, session, socket)
+    LivePlugs.live_plug params, session, socket, [
+      LivePlugs.LoadSessionAuth,
+      LivePlugs.StaticChanged,
+      LivePlugs.Csrf,
+      &mounted/3,
+    ]
+  end
 
-    {:ok, socket
+  def mounted(_params, _session, socket),
+    do: {:ok, socket
     |> assign(
       query: "",
       results: %{},
       selected_tab: "timeline",
       page_title: "My VoxPub"
     )}
-  end
 
   def handle_params(%{"tab" => tab}, _url, socket) do
     {:noreply, assign(socket, selected_tab: tab)}

@@ -3,8 +3,6 @@ defmodule VoxPublica.Web.SwitchUserController do
   use VoxPublica.Web, :controller
   alias VoxPublica.Users
 
-  plug MustLogIn, load_account: true
-
   def index(conn, _) do
     case Users.by_account(conn.assigns[:account]) do
       [] -> no_users(conn)
@@ -31,7 +29,7 @@ defmodule VoxPublica.Web.SwitchUserController do
     conn
     |> put_session(:user_id, user.id)
     |> put_flash(:info, "Welcome back, @#{user.character.username}!")
-    |> redirect(to: "/home/@#{user.character.username}")
+    |> redirect(to: "/_/@#{user.character.username}")
    end
 
   defp no_users(conn) do

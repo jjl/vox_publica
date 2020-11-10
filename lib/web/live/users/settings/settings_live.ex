@@ -10,21 +10,26 @@ defmodule VoxPublica.Web.SettingsLive do
     SettingsNavigationLive,
     SettingsGeneralLive
   }
+  alias VoxPublica.Web.LivePlugs
 
   def mount(params, session, socket) do
-    IO.inspect(session)
-    socket = init_assigns(params, session, socket)
-
-    {:ok,
-     socket
-     |> assign(
-       page_title: "Settings",
-       selected_tab: "general",
-       trigger_submit: false,
-       current_user: Fake.user_live()
-       #  session: session_token
-     )}
+    LivePlugs.live_plug params, session, socket, [
+      LivePlugs.LoadSessionAuth,
+      LivePlugs.StaticChanged,
+      LivePlugs.Csrf,
+      &mounted/3,
+    ]
   end
+
+  defp mounted(params, session, socket),
+    do: {:ok,
+         socket
+         |> assign(
+         page_title: "Settings",
+         selected_tab: "general",
+         trigger_submit: false,
+         current_user: Fake.user_live()
+         )}
 
   def handle_params(%{"tab" => tab}, _url, socket) do
     {:noreply, assign(socket, selected_tab: tab)}

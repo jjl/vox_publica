@@ -33,7 +33,7 @@ defmodule VoxPublica.ActivityPub.Adapter do
   end
 
   def get_actor_by_username(username) do
-    with {:ok, user} <- Users.by_username(username),
+    with {:ok, user} <- Users.ActivityPub.by_username(username),
          actor <- format_actor(user) do
       {:ok, actor}
     else
@@ -42,10 +42,11 @@ defmodule VoxPublica.ActivityPub.Adapter do
   end
 
   def update_local_actor(actor, params) do
-    with {:ok, user} <- Users.by_username(actor.username),
-         {:ok, user} <- Users.update(user, Map.put(params, :signing_key, params.keys)),
+    with {:ok, user} <- Users.ActivityPub.by_username(actor.username),
+         {:ok, user} <- Users.ActivityPub.update(user, Map.put(params, :signing_key, params.keys)),
          actor <- format_actor(user) do
       {:ok, actor}
     end
   end
+
 end

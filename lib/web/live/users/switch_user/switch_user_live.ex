@@ -1,8 +1,5 @@
-defmodule VoxPublica.Web.ProfileLive do
+defmodule VoxPublica.Web.SwitchUserLive do
   use VoxPublica.Web, :live_view
-  alias VoxPublica.Web.HeroProfileLive
-  alias VoxPublica.Web.ProfileNavigationLive
-  alias VoxPublica.Web.ProfileAboutLive
   alias VoxPublica.Fake
   alias VoxPublica.Web.LivePlugs
 
@@ -11,19 +8,14 @@ defmodule VoxPublica.Web.ProfileLive do
       LivePlugs.LoadSessionAuth,
       LivePlugs.StaticChanged,
       LivePlugs.Csrf,
+      LivePlugs.AuthRequired,
       &mounted/3,
     ]
   end
 
   defp mounted(params, session, socket),
-      do: {:ok,
-       socket
-       |> assign(
-         page_title: "User",
-         selected_tab: "about",
-         user: Fake.user_live(),
-         current_user: Fake.user_live()
-       )}
+    do: {:ok, socket
+    |> assign(page_title: "Switch User", selected_tab: "about", users: [])}
 
   # def handle_params(%{"tab" => tab} = _params, _url, socket) do
   #   {:noreply,

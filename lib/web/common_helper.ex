@@ -141,75 +141,8 @@ defmodule VoxPublica.Web.CommonHelper do
     end
   end
 
-
-  @doc """
-  This initializes the socket assigns
-  """
-  def init_assigns(
-        _params,
-        %{
-          "auth_token" => auth_token,
-          "current_user" => current_user,
-          "_csrf_token" => csrf_token
-        } = _session,
-        %Phoenix.LiveView.Socket{} = socket
-      ) do
-    # Logger.info(session_preloaded: session)
-    socket
-    |> assign(:auth_token, fn -> auth_token end)
-    |> assign(:current_user, fn -> current_user end)
-    |> assign(:csrf_token, fn -> csrf_token end)
-    |> assign(:static_changed, static_changed?(socket))
-    |> assign(:search, "")
-  end
-
-  def init_assigns(
-        _params,
-        %{
-          "auth_token" => auth_token,
-          "_csrf_token" => csrf_token
-        } = session,
-        %Phoenix.LiveView.Socket{} = socket
-      ) do
-    # Logger.info(session_load: session)
-
-    current_user = Fake.user_live()
-
-    socket
-    |> assign(:csrf_token, csrf_token)
-    |> assign(:static_changed, static_changed?(socket))
-    |> assign(:auth_token, auth_token)
-    |> assign(:show_title, false)
-    |> assign(:toggle_post, false)
-    |> assign(:current_context, nil)
-    |> assign(:current_user, current_user)
-    |> assign(:search, "")
-  end
-
-  def init_assigns(
-        _params,
-        %{
-          "_csrf_token" => csrf_token
-        } = _session,
-        %Phoenix.LiveView.Socket{} = socket
-      ) do
-    socket
-    |> assign(:csrf_token, csrf_token)
-    |> assign(:static_changed, static_changed?(socket))
-    |> assign(:current_user, nil)
-    |> assign(:search, "")
-  end
-
-  def init_assigns(_params, _session, %Phoenix.LiveView.Socket{} = socket) do
-    socket
-    |> assign(:current_user, nil)
-    |> assign(:search, "")
-    |> assign(:static_changed, static_changed?(socket))
-  end
-
   def paginate_next(fetch_function, %{assigns: assigns} = socket) do
     {:noreply, socket |> assign(page: assigns.page + 1) |> fetch_function.(assigns)}
   end
-
 
 end

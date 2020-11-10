@@ -14,7 +14,7 @@ If using Docker, just replace `mix ` with `make mix-` in the above commands, so 
 
 VoxPublica content publishing platform
 
-Copyright (c) 2020 VoxPublica Contributors
+Copyright (c) 2020 James Laver, Karen Kleinbaueru, VoxPublica Contributors
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as

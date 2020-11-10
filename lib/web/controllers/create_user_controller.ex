@@ -4,8 +4,6 @@ defmodule VoxPublica.Web.CreateUserController do
   alias VoxPublica.Web.Plugs.MustLogIn
   alias VoxPublica.Users
 
-  plug MustLogIn, load_account: true
-
   def index(conn, _),
     do: render(conn, "form.html", form: form(conn.assigns[:account]))
 
@@ -25,7 +23,7 @@ defmodule VoxPublica.Web.CreateUserController do
     conn
     |> put_flash(:info, "Welcome, #{username}, you're all ready to go!")
     |> put_session(:user_id, id)
-    |> redirect(to: "/home/@#{username}")
+    |> redirect(to: "/_/@#{username}")
   end
 
 end

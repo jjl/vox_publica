@@ -6,27 +6,27 @@ defmodule VoxPublica.Web.HeroProfileLive do
     ~L"""
       <div class="mainContent__hero">
         <div class="hero__image">
-          <img alt="background image" src="<%= @user.image_url %>" />
+          <img alt="background image" src="<%= @current_user.image_url %>" />
         </div>
         <div class="hero__info">
           <div class="info__icon">
-            <img alt="profile pic" src="<%= @user.icon_url %>" />
+            <img alt="profile pic" src="<%= @current_user.icon_url %>" />
           </div>
           <div class="info__meta">
-            <h1><%= @user.name %></h1>
-            <h4 class="info__username"><%= @user.username %></h4>
+            <h1><%= @current_user.name %></h1>
+            <h4 class="info__username"><%= @current_user.username %></h4>
             <div class="info__details">
-            <%= if @user.website do %>
+            <%= if @current_user.website do %>
               <div class="details__meta">
                 <a href="#" target="_blank">
                   <i class="feather-external-link"></i>
-                  <%= @user.website %>
+                  <%= @current_user.website %>
                 </a>
               </div>
               <% end %>
-              <%= if @user.location do %>
+              <%= if @current_user.location do %>
                 <div class="details__meta">
-                  <i class="feather-map-pin"></i><%= @user.location %>
+                  <i class="feather-map-pin"></i><%= @current_user.location %>
                 </div>
               <% end %>
             </div>
