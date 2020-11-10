@@ -9,7 +9,7 @@ gettext = "~> 0.11"
 jason = "~> 1.0"
 # db
 ecto_sql = "~> 3.4"
-flexto = "~> 0.2.1"
+flexto = "~> 0.2.2"
 postgrex = ">= 0.0.0"
 oban = "~> 2.0.0" # job queueing
 pointers_ulid = "~> 0.2"
